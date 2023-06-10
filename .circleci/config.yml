@@ -201,3 +201,5 @@ workflows:
           filters:
             branches:
               only: [feature/create_infrastructure_phase]
+      - configure-infrastructure:
+          requires: [deploy-infrastructure]
