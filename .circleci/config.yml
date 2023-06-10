@@ -120,7 +120,7 @@ jobs:
 
   deploy-infrastructure:
     docker:
-      - amazon/aws-cli
+      - image: amazon/aws-cli
     steps:
       - checkout
       - run:
@@ -175,3 +175,4 @@ workflows:
           filters:
             branches:
               only: [feature/create_infrastructure_phase]
+      
