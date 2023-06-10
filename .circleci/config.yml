@@ -122,3 +122,4 @@ workflows:
       - scan-backend:
           requires: [build-backend]
       - fail-alert
+          requires: [scan-frontend, scan-backend]
