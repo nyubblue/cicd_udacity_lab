@@ -4,6 +4,16 @@ orbs:
   slack: circleci/slack@4.12.5
 
 jobs:
+  fail-alert:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - checkout
+      - slack/notify:
+          channel: $SLACK_DEFAULT_CHANNEL
+          event: fail
+          template: basic_fail_1
+
   build-frontend:
     docker:
       - image: circleci/node:13.8.0
@@ -111,3 +121,4 @@ workflows:
           requires: [build-frontend]
       - scan-backend:
           requires: [build-backend]
+      - fail-alert
