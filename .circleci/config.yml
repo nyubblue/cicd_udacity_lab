@@ -171,15 +171,15 @@ jobs:
             apk add --no-cache tar gzip
             apk add --update ansible
             ansible --version
+            CMD ["echo", "some text"]
 
       - run:
           name: Configure server
           command: |
             cd .circleci/ansible
             ansible-playbook -i inventory.txt configure-server.yml
-      - run:
-          name: rollback if failed stack environment
-          command: destroy-environment
+      - destroy-environment
+
 
 workflows:
   default:
