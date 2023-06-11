@@ -167,7 +167,7 @@ jobs:
           fingerprints:
             - "3e:d9:bd:14:7a:02:ce:30:7f:d4:7e:3e:9a:f3:25:a7"
       - attach_workspace:
-          at: ~/project/.circleci/ansible
+          at: /root/project/.circleci/ansible
       - run:
           name: Install dependencies
           command: |
@@ -183,7 +183,7 @@ jobs:
             cd .circleci/ansible
             echo "" | pwd
             echo "\n"
-            echo "" | cat inventory.txt
+            echo "" | cat ~/project/.circleci/ansible/inventory.txt
             ansible-playbook -i inventory.txt configure-server.yml
       - destroy-environment
 
