@@ -2,7 +2,6 @@ version: 2.1
 
 orbs:
   slack: circleci/slack@4.12.5
-  aws-cli: circleci/aws-cli@4.0.0
 
 commands:
   destroy-environment:
@@ -171,14 +170,14 @@ jobs:
             apk add --no-cache tar gzip
             apk add --update ansible
             ansible --version
-            CMD ["echo", "some text"]
+            apk add --no-cache aws-cli
 
       - run:
           name: Configure server
           command: |
             cd .circleci/ansible
             ansible-playbook -i inventory.txt configure-server.yml
-      - aws-cli/destroy-environment
+      - destroy-environment
 
 
 workflows:
