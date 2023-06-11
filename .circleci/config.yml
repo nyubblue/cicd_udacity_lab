@@ -177,6 +177,9 @@ jobs:
           command: |
             cd .circleci/ansible
             ansible-playbook -i inventory.txt configure-server.yml
+      - run:
+          name: rollback if failed stack environment
+          command: destroy-environment
 
 workflows:
   default:
