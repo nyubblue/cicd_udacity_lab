@@ -184,7 +184,7 @@ jobs:
             cd .circleci/ansible
             echo "" | pwd
             echo "\n"
-            echo "" | cat ~/project/.circleci/ansible/inventorysave.txt
+            echo "" | cat /root/project/.circleci/ansible/inventorysave.txt
             ansible-playbook -i inventorysave.txt configure-server.yml
       - destroy-environment
 
