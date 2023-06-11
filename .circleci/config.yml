@@ -151,13 +151,13 @@ jobs:
             --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
             --output text >> inventorysave.txt --region "$AWS_DEFAULT_REGION"
             echo "" | cat inventorysave.txt
-            cd ~/
+
             echo "" | pwd
 
       - persist_to_workspace:
-          root: /root/project/
+          root: ~/
           paths:
-            - .circleci/ansible/inventorysave.txt
+            - project/.circleci/ansible/inventorysave.txt
 
   configure-infrastructure:
     docker:
