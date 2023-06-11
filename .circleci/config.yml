@@ -144,20 +144,20 @@ jobs:
       - run:
           name: Add back-end ip to ansible inventory
           command: |
-            cd .circleci/ansible
-            echo "[web]" > inventorysave.txt
+            mkdir -p /tmp/workspace
+            echo "[web]" > /tmp/workspace/inventorysave.txt
             aws ec2 describe-instances \
             --query 'Reservations[*].Instances[*].PublicIpAddress' \
             --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
-            --output text >> inventorysave.txt --region "$AWS_DEFAULT_REGION"
-            echo "" | cat inventorysave.txt
+            --output text >> /tmp/workspace/inventorysave.txt --region "$AWS_DEFAULT_REGION"
+            echo "" | cat /tmp/workspace/inventorysave.txt
 
             echo "" | pwd
 
       - persist_to_workspace:
-          root: ~/
+          root: /tmp/workspace
           paths:
-            - project/.circleci/ansible/inventorysave.txt
+            - inventorysave.txt
 
   configure-infrastructure:
     docker:
@@ -167,8 +167,7 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - "3e:d9:bd:14:7a:02:ce:30:7f:d4:7e:3e:9a:f3:25:a7"
-      - attach_workspace:
-          at: /root/project/.circleci/ansible
+
       - run:
           name: Install dependencies
           command: |
@@ -178,14 +177,17 @@ jobs:
             apk add --no-cache aws-cli
             apk add --no-cache bash
 
+      - attach_workspace:
+          at: /tmp/workspace
+
       - run:
           name: Configure server
           command: |
             cd .circleci/ansible
             echo "" | pwd
             echo "\n"
-            echo "" | cat /root/project/.circleci/ansible/inventorysave.txt
-            ansible-playbook -i inventorysave.txt configure-server.yml
+            echo "" | cat /tmp/workspace/inventorysave.txt
+            ansible-playbook -i /tmp/workspace/inventorysave.txt configure-server.yml
       - destroy-environment
 
 
