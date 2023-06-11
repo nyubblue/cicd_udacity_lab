@@ -171,11 +171,14 @@ jobs:
             apk add --update ansible
             ansible --version
             apk add --no-cache aws-cli
+            apk add --no-cache bash
 
       - run:
           name: Configure server
           command: |
             cd .circleci/ansible
+            echo "" | cat inventory.txt
+            echo "bin" | cat configure-server.yml
             ansible-playbook -i inventory.txt configure-server.yml
       - destroy-environment
 
