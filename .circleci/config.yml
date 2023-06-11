@@ -6,13 +6,15 @@ orbs:
 commands:
   destroy-environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
+    parameters:
+      stackName:
+        type: string
     steps:
       - run:
-          name: Destroy environments
-          # when: on_fail
+          name: Destroy environment
+          when: on_fail
           command: |
-            aws cloudformation delete-stack --stack-name udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}
-            aws cloudformation delete-stack --stack-name udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}
+            aws cloudformation delete-stack --stack-name $stackName
 
 jobs:
   fail-alert:
@@ -150,10 +152,10 @@ jobs:
             --query 'Reservations[*].Instances[*].PublicIpAddress' \
             --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
             --output text >> /tmp/workspace/inventorysave.txt --region "$AWS_DEFAULT_REGION"
-            echo "" | cat /tmp/workspace/inventorysave.txt
-
-            echo "" | pwd
-
+      - destroy-environment:
+          stackName: udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}
+      - destroy-environment:
+          stackName: udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}
       - persist_to_workspace:
           root: /tmp/workspace
           paths:
@@ -184,12 +186,11 @@ jobs:
           name: Configure server
           command: |
             cd .circleci/ansible
-            echo "" | pwd
-            echo "\n"
-            echo "" | cat /tmp/workspace/inventorysave.txt
             ansible-playbook -i /tmp/workspace/inventorysave.txt configure-server.yml
-      - destroy-environment
-
+      - destroy-environment:
+          stackName: udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}
+      - destroy-environment:
+          stackName: udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}
 
 workflows:
   default:
