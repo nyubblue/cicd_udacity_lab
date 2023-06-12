@@ -208,7 +208,8 @@ jobs:
           command: |
             if grep -q "has been executed successfully." ~/project/backend/migrations_dump.txt
             then
-              curl https://kvdb.io/Jc7692DsCTvJT8xaj68mjs/migration_${CIRCLE_WORKFLOW_ID:0:7} -d '200'
+              curl https://kvdb.io/29TNaEMHNhEae4FGMh8AVit7/migration_${CIRCLE_WORKFLOW_ID:0:7} -d '200'
+              echo "Success"
             fi
 
 workflows:
