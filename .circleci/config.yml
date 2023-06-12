@@ -150,10 +150,7 @@ jobs:
             --query 'Reservations[*].Instances[*].PublicIpAddress' \
             --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
             --output text >> /tmp/workspace/inventorysave.txt --region "$AWS_DEFAULT_REGION"
-      - destroy-environment:
-          stackName: udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}
-      - destroy-environment:
-          stackName: udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}
+      - destroy-environment
       - persist_to_workspace:
           root: /tmp/workspace
           paths:
