@@ -211,7 +211,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            curl -O https://bootstrap.pypa.io/get-pip.py
+            curl -O https://bootstrap.pypa.io/pip/3.5/get-pip.py
             python3 get-pip.py --user
             python3 -m pip install --user ansible
             pip3 install awscli --upgrade --user
