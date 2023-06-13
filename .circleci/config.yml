@@ -217,7 +217,7 @@ jobs:
             apk add --no-cache aws-cli
             apk add --no-cache bash
             apk add --no-cache openssl-dev
-            apk add --update nodejs npm
+            apk add --update=13.8.0 npm
       - attach_workspace:
           at: /tmp/workspace
       - run:
