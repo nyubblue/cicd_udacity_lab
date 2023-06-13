@@ -205,19 +205,19 @@ jobs:
 
   deploy-frontend:
     docker:
-      - image: python:3.9.16-alpine
+      - image: circleci/node:13.8.0
     steps:
       - checkout
       - run:
           name: Install dependencies
           command: |
-            apk add --no-cache tar gzip
-            apk add --update ansible
-            ansible --version
-            apk add --no-cache aws-cli
-            apk add --no-cache bash
-            apk add --no-cache openssl-dev
-            apk add --update=13.8.0 npm
+            npm install
+            sudo apt-get update
+            sudo apt-get install -y python3 python3-pip
+            curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+            python3 get-pip.py --user
+            python3 -m pip install --user ansible
+            pip install awscli
       - attach_workspace:
           at: /tmp/workspace
       - run:
@@ -231,7 +231,6 @@ jobs:
             echo "API_URL = ${API_URL}"
             echo API_URL="http://${BACKEND_IP}:3030" >> frontend/.env
             echo | cat frontend/.env
-
       - run:
           name: Deploy frontend objects
           command: |
