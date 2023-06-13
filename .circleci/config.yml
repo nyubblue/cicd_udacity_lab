@@ -214,8 +214,8 @@ jobs:
             sudo apt-get update
             curl https://bootstrap.pypa.io/pip/3.5/get-pip.py -o get-pip.py
             python3 get-pip.py --user
-            pip install awscli
-            python3 -m pip install --user ansible 
+            python3 -m pip install --user ansible
+            pip3 install awscli --upgrade --user
       - attach_workspace:
           at: /tmp/workspace
       - run:
