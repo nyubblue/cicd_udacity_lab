@@ -59,7 +59,7 @@ jobs:
             tar -C backend -czvf artifact.tar.gz .
             # no error if existing, make a directory
             mkdir -p /tmp/workspace
-            mv artifact-backend.tar.gz /tmp/workspace/artifact.tar.gz
+            mv artifact.tar.gz /tmp/workspace/artifact.tar.gz
       - persist_to_workspace:
           root: /tmp/workspace
           paths:
