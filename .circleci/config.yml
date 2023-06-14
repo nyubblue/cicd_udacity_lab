@@ -211,7 +211,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            sudo apt-get update
+            sudo add-apt-repository ppa:deadsnakes/ppa
             curl -O https://bootstrap.pypa.io/get-pip.py
             python3 get-pip.py --user
             python3 -m pip install --user ansible
