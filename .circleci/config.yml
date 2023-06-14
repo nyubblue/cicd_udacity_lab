@@ -35,7 +35,8 @@ jobs:
       - run:
           name: Build front-end
           command: |
-            sudo yum install python37
+            sudo apt-get update
+            sudo apt-get install python3.6
             cd frontend
             npm install
             npm run build
