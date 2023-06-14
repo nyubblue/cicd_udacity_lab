@@ -55,6 +55,7 @@ jobs:
             cd backend
             npm install
             npm run build
+            cd ..
             tar -C backend -czvf artifact.tar.gz .
             # no error if existing, make a directory
             mkdir -p /tmp/workspace
