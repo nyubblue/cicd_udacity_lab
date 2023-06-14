@@ -6,11 +6,32 @@ orbs:
 commands:
   destroy-environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
+    parameters:
+      bucket_name:
+        type: string
+        default: ""
     steps:
       - run:
           name: Destroy environment
           when: on_fail
           command: |
+            # check S3 for destroy environment
+            bucket_name="<< parameters.bucket_name >>"
+            if [[ -z $bucket_name ]]
+            then
+              echo "skip for the empty action the s3"
+              exit 0
+            fi
+
+            if aws s3 ls "s3://$bucket_name" 2>&1 | grep -q 'NoSuchBucket'
+            then
+              echo "Bucket doesn't exist, skip the empty bucket action"
+              exit 0
+            else
+              # Empty S3 before delete the bucket
+              aws s3 rm "s3://$bucket_name" --recursive
+            fi
+
             aws cloudformation delete-stack --stack-name udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}
             aws cloudformation delete-stack --stack-name udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}
 
@@ -244,7 +265,8 @@ jobs:
             npm run build
             tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
             aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
-      - destroy-environment
+      - destroy-environment:
+          bucket_name: udapeople-${CIRCLE_WORKFLOW_ID:0:7}
 
   deploy-backend:
     docker:
@@ -268,7 +290,8 @@ jobs:
             cp /tmp/workspace/artifact.tar.gz ../files/artifact.tar.gz
             cp /tmp/workspace/inventorysave.txt inventorysave.txt
             ansible-playbook -i inventorysave.txt deploy-backend.yml
-      - destroy-environment
+      - destroy-environment:
+          bucket_name: udapeople-${CIRCLE_WORKFLOW_ID:0:7}
 
 workflows:
   default:
@@ -293,5 +316,7 @@ workflows:
           requires: [deploy-infrastructure]
       - run-migrations:
           requires: [configure-infrastructure]
+      - deploy-frontend:
+          requires: [run-migrations]
       - deploy-backend:
           requires: [run-migrations]
