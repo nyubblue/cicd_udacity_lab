@@ -284,12 +284,13 @@ jobs:
           command: |
             apk add --update ansible
             apk add --no-cache aws-cli
+            apk add --no-cache bash
       - run:
           name: Deploy backend
           command: |
             cd .circleci/ansible
             mkdir -p roles/deploy/files
-            cp /tmp/workspace/artifact.tar.gz roles/deploy/files/artifact.tar.gz
+            mv /tmp/workspace/artifact.tar.gz roles/deploy/files/artifact.tar.gz
             echo | ls roles/deploy/files
             cp /tmp/workspace/inventorysave.txt inventorysave.txt
             ansible-playbook -i inventorysave.txt deploy-backend.yml
