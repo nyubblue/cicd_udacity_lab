@@ -4,7 +4,7 @@
     state: directory
 
 - name: Copy artifact to server
-  template:
+  copy:
     src: "files/artifact.tar.gz"
     dest: "~/web/artifact.tar.gz"
 
