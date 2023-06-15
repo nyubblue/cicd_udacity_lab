@@ -288,8 +288,8 @@ jobs:
           name: Deploy backend
           command: |
             cd .circleci/ansible
-            mkdir -p files
-            cp /tmp/workspace/artifact.tar.gz files/artifact.tar.gz
+            mkdir -p roles/deploy/files
+            cp /tmp/workspace/artifact.tar.gz roles/deploy/files/artifact.tar.gz
             cp /tmp/workspace/inventorysave.txt inventorysave.txt
             ansible-playbook -i inventorysave.txt deploy-backend.yml
       - destroy-environment:
