@@ -11,7 +11,7 @@
 - name: Extract back-end (artifact.tar.gz)
   unarchive:
     src: "~/web/artifact.tar.gz"
-    dest: "~/web"
+    dest: "~/web/"
 
 - name: start the app
   shell: |
