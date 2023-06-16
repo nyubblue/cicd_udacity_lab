@@ -337,7 +337,8 @@ jobs:
           command: |
             URL_CHECK="${API_URL}/api/status"
             echo $URL_CHECK
-            if curl "${API_URL}/api/status" | grep "ok"
+            echo $API_URL
+            if curl -s "${API_URL}/api/status" | grep "ok" > /dev/null
             then
               echo "Success"
               return 0
