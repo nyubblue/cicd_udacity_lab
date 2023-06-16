@@ -230,7 +230,10 @@ jobs:
           command: |
             if grep -q "has been executed successfully." ~/project/backend/migrations_dump.txt
             then
+              echo "Sucess"
               curl https://kvdb.io/29TNaEMHNhEae4FGMh8AVit7/migration_${CIRCLE_WORKFLOW_ID:0:7} -d '200'
+            else
+              echo "Fail"
             fi
 
   deploy-frontend:
@@ -338,8 +341,8 @@ jobs:
             else
               return 1
             fi
-      - destroy-environment:
-          bucket_name: udapeople-${CIRCLE_WORKFLOW_ID:0:7}
+#      - destroy-environment:
+#          bucket_name: udapeople-${CIRCLE_WORKFLOW_ID:0:7}
 workflows:
   default:
     jobs:
