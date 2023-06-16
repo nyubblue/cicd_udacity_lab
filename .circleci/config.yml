@@ -335,9 +335,7 @@ jobs:
       - run:
           name: Backend smoke test.
           command: |
-            URL_CHECK="${API_URL}/api/status"
-            echo $URL_CHECK
-            echo $API_URL
+            # which will persist the value across steps
             if curl -s "${API_URL}/api/status" | grep "ok" > /dev/null
             then
               echo "Success"
