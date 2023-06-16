@@ -335,10 +335,14 @@ jobs:
       - run:
           name: Backend smoke test.
           command: |
+            curl --version
+            echo | curl "${API_URL}/api/status"
             if curl "${API_URL}/api/status" | grep "ok"
             then
+              echo "Success"
               return 0
             else
+              echo "Failed"
               return 1
             fi
       - run:
