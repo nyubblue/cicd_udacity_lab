@@ -315,6 +315,8 @@ jobs:
   smoke-test:
     docker:
       - image: python:3.9.16-alpine
+    environment:
+      BASH_ENV: /etc/profile
     steps:
       - checkout
       - run:
@@ -331,9 +333,7 @@ jobs:
             --query 'Reservations[*].Instances[*].PublicIpAddress' \
             --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
             --output text --region "$AWS_DEFAULT_REGION")
-            export API_URL="http://${BACKEND_IP}:3030"
-            echo "http://${BACKEND_IP}:3030" >> $BASH_ENV
-            echo "::set-env name=API_URL::http://${BACKEND_IP}:3030"
+            echo 'export API_URL="http://${BACKEND_IP}:3030"' >> "$BASH_ENV"
       - run:
           name: Backend smoke test.
           command: |
