@@ -332,6 +332,7 @@ jobs:
             --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
             --output text --region "$AWS_DEFAULT_REGION")
             export API_URL="http://${BACKEND_IP}:3030"
+            echo "http://${BACKEND_IP}:3030" >> $BASH_ENV
             echo "API_URL=http://${BACKEND_IP}:3030" >> $BASH_ENV
       - run:
           name: Backend smoke test.
