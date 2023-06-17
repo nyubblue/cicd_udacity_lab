@@ -257,19 +257,22 @@ jobs:
             cd backend
             npm install
             npm run migrations > migrations_dump.txt
-            migration_exit_code=$?
-            if [ $migration_exit_code -eq 0 ]; then
-              echo "Migrations executed successfully"
-              # Perform additional actions if needed
-            else
-              echo "Migrations failed to execute"
-              # Perform error handling or rollback if needed
+      - run:
+          name: Send migration results to kvdb.io
+          command: |
+          migration_exit_code=$?
+          if [ $migration_exit_code -eq 0 ]; then
+            echo "Migrations executed successfully"
+            # Perform additional actions if needed
+          else
+            echo "Migrations failed to execute"
+            # Perform error handling or rollback if needed
+          fi
+            cat ~/project/backend/migrations_dump.txt
+            if grep -q "has been executed successfully." ~/project/backend/migrations_dump.txt
+            then
+              curl https://kvdb.io/29TNaEMHNhEae4FGMh8AVit7/migration_${CIRCLE_WORKFLOW_ID:0:7} -d '200'
             fi
-              cat ~/project/backend/migrations_dump.txt
-              if grep -q "has been executed successfully." ~/project/backend/migrations_dump.txt
-              then
-                curl https://kvdb.io/29TNaEMHNhEae4FGMh8AVit7/migration_${CIRCLE_WORKFLOW_ID:0:7} -d '200'
-              fi
 
   deploy-frontend:
     docker:
