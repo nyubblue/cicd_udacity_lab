@@ -315,8 +315,6 @@ jobs:
   smoke-test:
     docker:
       - image: python:3.9.16-alpine
-    environment:
-      BASH_ENV: /etc/profile
     steps:
       - checkout
       - run:
@@ -326,18 +324,14 @@ jobs:
             apk add --no-cache bash
             apk add --no-cache curl
       - run:
-          name: Get backend url
+          name: Backend smoke test.
           command: |
             # Fetch and prepare the BACKEND_IP env var
             export BACKEND_IP=$(aws ec2 describe-instances \
             --query 'Reservations[*].Instances[*].PublicIpAddress' \
             --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
             --output text --region "$AWS_DEFAULT_REGION")
-            echo 'export API_URL="http://${BACKEND_IP}:3030"' >> "$BASH_ENV"
-      - run:
-          name: Backend smoke test.
-          command: |
-            # which will persist the value across steps
+            export API_URL="http://${BACKEND_IP}:3030"
             if curl -s "${API_URL}/api/status" | grep "ok" > /dev/null
             then
               echo "Success"
