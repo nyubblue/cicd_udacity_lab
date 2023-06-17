@@ -305,7 +305,7 @@ jobs:
 
   deploy-backend:
     docker:
-      - image: python:3.9.16-alpine
+      - image: alpine-node:13.8.0
     steps:
       - checkout
       - add_ssh_keys:
@@ -319,9 +319,6 @@ jobs:
           command: |
             apk add --update ansible
             apk add --no-cache aws-cli
-            apk add --no-cache bash
-            apk add --no-cache curl
-            apk add --update npm
             
       - run:
           name: Deploy backend
@@ -339,16 +336,13 @@ jobs:
 
   smoke-test:
     docker:
-      - image: python:3.9.16-alpine
+      - image: alpine-node:13.8.0
     steps:
       - checkout
       - run:
           name: Install dependencies
           command: |
             apk add --no-cache aws-cli
-            apk add --no-cache bash
-            apk add --no-cache curl
-            apk add --update npm
       - run:
           name: Backend smoke test.
           command: |
