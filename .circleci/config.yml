@@ -260,6 +260,7 @@ jobs:
       - run:
           name: Send migration results to kvdb.io
           command: |
+            npm install ts-node
             ts-node -r dotenv/config node_modules/.bin/typeorm migration:run
             migration_exit_code=$?
             if [ $migration_exit_code -eq 0 ]; then
