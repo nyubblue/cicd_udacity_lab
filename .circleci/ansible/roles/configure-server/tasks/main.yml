@@ -27,17 +27,3 @@
     global: yes
     production: yes
     state: present
-
-- name: "Export env"
-  become: true
-  shell:  |
-    touch /etc/profile.d/env.sh
-    echo TYPEORM_CONNECTION=$TYPEORM_CONNECTION >> /etc/profile.d/env.sh
-    echo TYPEORM_ENTITIES=$TYPEORM_ENTITIES >> /etc/profile.d/env.sh
-    echo TYPEORM_HOST=$TYPEORM_HOST >> /etc/profile.d/env.sh
-    echo TYPEORM_PORT=$TYPEORM_PORT >> /etc/profile.d/env.sh
-    echo TYPEORM_USERNAME=$TYPEORM_USERNAME >> /etc/profile.d/env.sh
-    echo TYPEORM_PASSWORD=$TYPEORM_PASSWORD >> /etc/profile.d/env.sh
-    echo TYPEORM_DATABASE=$TYPEORM_DATABASE >> /etc/profile.d/env.sh
-    echo TYPEORM_MIGRATIONS=$TYPEORM_MIGRATIONS >> /etc/profile.d/env.sh
-    echo TYPEORM_MIGRATIONS_DIR=$TYPEORM_MIGRATIONS_DIR >> /etc/profile.d/env.sh
