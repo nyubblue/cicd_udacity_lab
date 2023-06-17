@@ -351,8 +351,8 @@ jobs:
             else
               return 1
             fi
-      - destroy-environment:
-          bucket_name: udapeople-${CIRCLE_WORKFLOW_ID:0:7}
+ #     - destroy-environment:
+  #        bucket_name: udapeople-${CIRCLE_WORKFLOW_ID:0:7}
 workflows:
   default:
     jobs:
