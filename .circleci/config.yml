@@ -48,7 +48,7 @@ commands:
           command: |
             # Curl command here to see if there was a successful migration associated with the workflow id, store result in SUCCESS variable
             SUCCESS=$(curl --insecure  https://kvdb.io/5HRs7va8Xzwmv4Vykwt3zA/migration_<< parameters.workflow_id >>)
-            if(( $SUCCESS==200 )); 
+            if [[ $SUCCESS == *"200"* ]]; 
             then
               echo "Process :: migration:revert"
               cd ~/project/backend
@@ -321,7 +321,7 @@ jobs:
             apk add --no-cache aws-cli
             apk add --no-cache bash
             apk add --no-cache curl
-            apk add --update nodejs=13.8.0 npm
+            
       - run:
           name: Deploy backend
           command: |
@@ -347,7 +347,6 @@ jobs:
             apk add --no-cache aws-cli
             apk add --no-cache bash
             apk add --no-cache curl
-            apk add --update nodejs=13.8.0 npm
       - run:
           name: Backend smoke test.
           command: |
