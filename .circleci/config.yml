@@ -305,7 +305,7 @@ jobs:
 
   deploy-backend:
     docker:
-      - image: alpine-node:13.8.0
+      - image: node:13-alpine
     steps:
       - checkout
       - add_ssh_keys:
@@ -336,7 +336,7 @@ jobs:
 
   smoke-test:
     docker:
-      - image: alpine-node:13.8.0
+      - image: node:13-alpine
     steps:
       - checkout
       - run:
