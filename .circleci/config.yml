@@ -319,7 +319,9 @@ jobs:
           command: |
             apk update
             apk add --update ansible
-            apk add --no-cache aws-cli
+            apk add --no-cache python3
+            pip3 install --upgrade pip
+            pip3 install awscli
             apk add --no-cache bash
             apk add --no-cache curl
             
@@ -346,7 +348,9 @@ jobs:
           name: Install dependencies
           command: |
             apk update
-            apk add --no-cache aws-cli
+            apk add --no-cache python3
+            pip3 install --upgrade pip
+            pip3 install awscli
             apk add --no-cache bash
             apk add --no-cache curl
       - run:
