@@ -48,7 +48,6 @@ commands:
           command: |
             # Curl command here to see if there was a successful migration associated with the workflow id, store result in SUCCESS variable
             SUCCESS=$(curl --insecure  https://kvdb.io/5HRs7va8Xzwmv4Vykwt3zA/migration_<< parameters.workflow_id >>)
-            echo $SUCCESS
             if(( $SUCCESS==200 )); 
             then
               echo "Process :: migration:revert"
