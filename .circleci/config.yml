@@ -40,6 +40,7 @@ commands:
     parameters:
       workflow_id:
         type: string
+        default: ""
     steps:
       - run:
           name: Revert migrations
@@ -402,6 +403,6 @@ workflows:
       - deploy-frontend:
           requires: [run-migrations]
       - deploy-backend:
-          requires: [run-migrations]
+          requires: [run-migrations, deploy-frontend]
       - smoke-test:
           requires: [deploy-backend, deploy-frontend]
