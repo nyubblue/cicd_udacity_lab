@@ -333,7 +333,6 @@ jobs:
             --output text --region "$AWS_DEFAULT_REGION")
             export API_URL="http://${BACKEND_IP}:3030"
             echo $API_URL
-            echo | curl "${API_URL}/api/status"
             if curl "http://34.227.192.20:3030/api/status" | grep "ok"
             then
               echo "SUCESS"
