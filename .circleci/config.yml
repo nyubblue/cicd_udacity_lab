@@ -51,9 +51,10 @@ commands:
             echo $SUCCESS
             if(( $SUCCESS==200 )); 
             then
+              echo "Process :: migration:revert"
               cd ~/project/backend
               npm install
-            npm run migration:revert
+              npm run migration:revert
             fi
 
 jobs:
