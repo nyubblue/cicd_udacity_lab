@@ -317,8 +317,11 @@ jobs:
       - run:
           name: Install dependencies
           command: |
+            apk update
             apk add --update ansible
             apk add --no-cache aws-cli
+            apk add --no-cache bash
+            apk add --no-cache curl
             
       - run:
           name: Deploy backend
@@ -342,7 +345,10 @@ jobs:
       - run:
           name: Install dependencies
           command: |
+            apk update
             apk add --no-cache aws-cli
+            apk add --no-cache bash
+            apk add --no-cache curl
       - run:
           name: Backend smoke test.
           command: |
