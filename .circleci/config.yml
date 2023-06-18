@@ -448,12 +448,12 @@ jobs:
                 then
                   iD=${stack:19:25}
                   bucketName="udapeople-${iD}"
-                  if aws s3 ls "s3://$bucket_name" 2>&1 | grep -q 'NoSuchBucket'
+                  if aws s3 ls "s3://$bucketName" 2>&1 | grep -q 'NoSuchBucket'
                   then
                     echo "Bucket doesn't exist, skip the empty bucket action"
                   else
                     # Empty S3 before delete the bucket
-                    aws s3 rm "s3://$bucket_name" --recursive
+                    aws s3 rm "s3://$bucketName" --recursive
                   fi
                   aws cloudformation delete-stack --stack-name "udapeople-frontend-${iD}"
 
