@@ -424,17 +424,9 @@ jobs:
 
   cleanup:
     docker:
-      - image: node:13-alpine
+      - image: amazon/aws-cli
     steps:
       - checkout
-      - run:
-          name: Install dependencies
-          command: |
-            apk update
-            apk add --no-cache python3
-            pip3 install --upgrade pip
-            pip3 install awscli
-            apk add --no-cache bash
       - run:
           name: Remove old stacks and files
           command: |
