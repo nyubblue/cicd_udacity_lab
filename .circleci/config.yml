@@ -463,6 +463,7 @@ jobs:
                   aws cloudformation delete-stack --stack-name "udapeople-backend-${iD}"
                 else
                   echo "------------------ Stack isn't the object that need to clear up ------------------"
+                fi
               fi
             done
 
