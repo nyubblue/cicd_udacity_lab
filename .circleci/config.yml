@@ -455,14 +455,14 @@ jobs:
                     # Empty S3 before delete the bucket
                     aws s3 rm "s3://$bucket_name" --recursive
                   fi
-                  aws cloudformation delete-stack --stack-name udapeople-frontend-${iD}
+                  aws cloudformation delete-stack --stack-name "udapeople-frontend-${iD}"
 
                 elif [[ $stack =~ "backend" ]];
                 then
                   iD=${stack:18:24}
-                  aws cloudformation delete-stack --stack-name udapeople-backend-${iD}
+                  aws cloudformation delete-stack --stack-name "udapeople-backend-${iD}"
                 else
-                  echo '------------------ Stack isn't the object that need to clear up ------------------'
+                  echo "------------------ Stack isn't the object that need to clear up ------------------"
               fi
             done
 
