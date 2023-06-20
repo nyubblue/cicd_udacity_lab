@@ -1,0 +1,6 @@
+- URL1:
+https://github.com/nyubblue/cicd_udacity_lab/tree/master
+- URL2:
+http://udapeople-6b68695.s3-website-us-east-1.amazonaws.com
+- cloudfront domain name:
+http://d13xpnht7twipg.cloudfront.net/

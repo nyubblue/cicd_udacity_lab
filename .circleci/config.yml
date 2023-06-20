@@ -366,7 +366,7 @@ jobs:
             echo $API_URL
             if curl --retry 10 --retry-max-time 1000 --retry-delay 5 --retry-all-errors "${API_URL}/api/status" | grep "ok"
             then
-              return 0
+              return 1
             else
               return 1
             fi
@@ -430,6 +430,12 @@ jobs:
       - run:
           name: Remove old stacks and files
           command: |
+            export oldWorkflowID=$(aws cloudformation \
+            list-exports --query "Exports[?Name==\`WorkflowID\`].Value" \
+            --no-paginate --output text)
+            echo OldWorkflowID: "${oldWorkflowID}"
+            echo $oldWorkflowID
+
             echo CIRCLE_WORKFLOW_ID "${CIRCLE_WORKFLOW_ID:0:7}"
             # Fetch the stack names 
             export STACKS=(
