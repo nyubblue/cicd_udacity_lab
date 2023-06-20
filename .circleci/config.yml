@@ -433,14 +433,12 @@ jobs:
       - image: amazon/aws-cli
     steps:
       - checkout
+      - run: yum -y install tar gzip
       - attach_workspace:
           at: /tmp/workspace
       - run:
           name: Remove old stacks and files
           command: |
-            export oldWorkflowID=$(aws cloudformation \
-            list-exports --query "Exports[?Name==\`WorkflowID\`].Value" \
-            --no-paginate --output text)
             echo OldWorkflowID: | cat /tmp/workspace/OldWorkflowID.txt
             cat /tmp/workspace/OldWorkflowID.txt
 
